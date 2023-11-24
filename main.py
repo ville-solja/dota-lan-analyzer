@@ -1,6 +1,7 @@
 import requests
 import json
 import matplotlib.pyplot as plt
+import numpy as np
 
 #Token for access
 with open('token.txt', 'r') as f:
@@ -91,6 +92,10 @@ def plot_graphs(dataset):
     for player,entries in dataset.items():
         x_values = [entry[0] for entry in entries]
         y_values = [entry[1] for entry in entries]
+
+        # Average of y_values
+        average_y = np.mean(y_values)
+        plt.axhline(average_y, color='red', linestyle='dashed', label='Average')
         plt.plot(x_values, y_values, marker='o', linestyle='-', color='b', label=player)
         plt.title('Line Graph based on {}\'s dataset'.format(player))
         plt.xlabel('MatchID')
