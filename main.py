@@ -67,7 +67,7 @@ def process_matches(match_list, players):
             response = fetch_match_data(match)
             for player in (response["data"]["match"]["players"]):
                 if player["steamAccountId"] in players.values():
-                    result_temp = [match_name,player["imp"]]
+                    result_temp = [match_name,player["imp"],player["goldPerMinute"],player["experiencePerMinute"]]
                     player_name =  {i for i in players if players[i]==player["steamAccountId"]}
                     player_name = player_name.pop()
                     result = responses[player_name]
