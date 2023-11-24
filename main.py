@@ -1,5 +1,6 @@
 import requests
 import json
+import matplotlib.pyplot as plt
 
 #Token for access
 with open('token.txt', 'r') as f:
@@ -85,10 +86,26 @@ def find_player(player_list):
             players_list[name] = id
     return players_list
 
+def plot_graphs(dataset):
+    print(dataset.items())
+    for player,entries in dataset.items():
+        x_values = [entry[0] for entry in entries]
+        y_values = [entry[1] for entry in entries]
+        plt.plot(x_values, y_values, marker='o', linestyle='-', color='b', label=player)
+        plt.title('Line Graph based on {}\'s dataset'.format(player))
+        plt.xlabel('MatchID')
+        plt.ylabel('IMP')
+
+        plt.xticks(rotation=45, ha='right')
+
+        plt.tight_layout()
+        plt.grid(True)
+        plt.show()
+    
+
 #main script
 def main():
-    players = find_player('playerlist.txt')
-    print(process_matches('matchlist.txt', players))
+    plot_graphs(process_matches('matchlist.txt', find_player('playerlist.txt')))
 
 if __name__ == "__main__":
     main()
