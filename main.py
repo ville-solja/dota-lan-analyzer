@@ -2,6 +2,14 @@ import requests
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+import configparser
+from pathlib import Path
+
+# Read configuration from config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
+# Get the image directory from the configuration
+image_directory = config['Paths']['image_directory']
 
 #Token for access
 with open('token.txt', 'r') as f:
@@ -88,7 +96,6 @@ def find_player(player_list):
     return players_list
 
 def plot_graphs(dataset):
-    print(dataset.items())
     for player,entries in dataset.items():
         x_values = [entry[0] for entry in entries]
         y_values = [entry[1] for entry in entries]
@@ -105,8 +112,8 @@ def plot_graphs(dataset):
 
         plt.tight_layout()
         plt.grid(True)
-        plt.show()
-    
+        image_path = image_directory+'/{}.png'.format(player)
+        plt.savefig(image_path) 
 
 #main script
 def main():
